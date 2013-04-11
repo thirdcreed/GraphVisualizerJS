@@ -4,8 +4,9 @@ background: #333;
 
 h1 {
 color:#ff7800;
-font-size:4:3em;
+font-size:3em;
 font-family:verdana;
+margin:0;
 }
 p,h2 {
 color:#fff;
@@ -20,7 +21,18 @@ color:#fff;
     border-radius: 30px;
     position: absolute;
     border: 1px solid black;
+    color: #fff;
+    font-size:1.2em;
 
+}
+
+.weightLabels {
+   font-size:2em;
+    color:#fff;
+}
+
+.endPoints{
+   background:#fff;
 }
 
 #nodesearch_canvas {

@@ -13,6 +13,7 @@ function Node(id, adj) {
 }
 
 function GraphViewModel() {
+
     var self = this;
     self.from = null;
     self.to = null;
@@ -21,8 +22,8 @@ function GraphViewModel() {
     self.marked = [];
     self.graph = ko.observableArray();
     self.$canvas = $('#nodesearch_canvas');
-    self.connectionsMatrix = [];
-
+    //self.connectionsMatrix = [];
+   // jsPlumb.Defaults.Container = 'nodesearch_canvas';
     
 
     
@@ -87,6 +88,7 @@ function GraphViewModel() {
                 lineWidth: 3,
                 strokeStyle: "#fff"
             },
+            
             anchor: "AutoDefault",
         };
     };
@@ -124,7 +126,8 @@ function GraphViewModel() {
                     
                     ["Label", {
                         label: "",
-                        id: "label"
+                        id: "label",
+                        cssClass: "weightLabels"
                     }]
                 ]
             };
@@ -235,8 +238,8 @@ function GraphViewModel() {
                 p[rootA] = rootB;
                 console.log("Coloring: ", setA, setB);
                 
-                jsPlumb.select({ source: "" + setA, target: "" + setB }).setPaintStyle({ strokeStyle: "black", lineWidth: 20});
-               jsPlumb.select({ source: "" + setB, target: "" + setA }).setPaintStyle({ strokeStyle: "black", lineWidth: 20});
+                jsPlumb.select({ source: "" + setA, target: "" + setB }).setPaintStyle({ strokeStyle: "black", lineWidth: 15});
+               jsPlumb.select({ source: "" + setB, target: "" + setA }).setPaintStyle({ strokeStyle: "black", lineWidth: 15});
                // if (p[setA] != null) self.graph()[setB].adj()[p[setA]].gui.getOverlay("label").setLabel("XXXXXX");
             }
         
