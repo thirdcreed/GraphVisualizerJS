@@ -1,10 +1,6 @@
 <!doctype html>
 <body>
-<select data-bind="options:$root.graphTypes, optionsText:'graphType', value:'graphType'" id="graphTypeId"></select>
-<p>Right click and drag to add a connection</p>
-<div id="toolbar" class="ui-widget-header ui-corner-all"> <span id="dfs" class="token ui-state-default ui-corner-all">DFS</span>
- <span id="bfs" class="token ui-state-default ui-corner-all">BFS</span>
-</div>
+
 
 <script type='text/javascript' src='scripts/knockout-2.2.1.js'></script>
 <link href="css/ui-lightness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
@@ -14,13 +10,21 @@
 <script type='text/javascript' src ="scripts/jquery.jsPlumb-1.3.16-all-min.js"></script>
 <script type='text/javascript' src ="scripts/graphVis.js"></script>
 
+<h1>Node Graphin'</h1>
+    <h2>...on a handstand</h2>
+
+<p>Right click and drag to add a connection</p>
+<div id="toolbar" class="ui-widget-header ui-corner-all"> <span id="dfs" class="token ui-state-default ui-corner-all">DFS</span>
+ <span id="bfs" class="token ui-state-default ui-corner-all">BFS</span>
+
 
 <button data-bind="click: addNode">Add A Node</button>
 <button data-bind="click: clearConnections">Clear Connections</button>
 <button data-bind="click: reset">Reset</button>
 <button data-bind="click: unmark">Unmark</button>
 <button data-bind="click: kruskal">Kruskal</button>
-
+<select data-bind="options:$root.graphTypes, optionsText:'graphType', value:'graphType'" id="graphTypeId"></select>
+</div>
 <div id="nodesearch_canvas">
     <div data-bind="foreach: { data: graph, afterAdd: bindNodeEvents}">
     <div class="circle" data-bind="attr: {id: id}, text: id"></div>

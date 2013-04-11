@@ -85,7 +85,7 @@ function GraphViewModel() {
             connector: "StateMachine",
             paintStyle: {
                 lineWidth: 3,
-                strokeStyle: "#056"
+                strokeStyle: "#fff"
             },
             anchor: "AutoDefault",
         };
