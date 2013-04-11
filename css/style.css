@@ -1,6 +1,41 @@
-body{
+html{
 background: #333;
 }
+
+body{
+margin: 0 auto;
+width:95%;
+}
+
+#toolbar { 
+    padding: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    background: #ffb472;
+background: -moz-linear-gradient(top,  #ffb472 0%, #ff7800 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffb472), color-stop(100%,#ff7800));
+background: -webkit-linear-gradient(top,  #ffb472 0%,#ff7800 100%);
+background: -o-linear-gradient(top,  #ffb472 0%,#ff7800 100%);
+background: -ms-linear-gradient(top,  #ffb472 0%,#ff7800 100%);
+background: linear-gradient(to bottom,  #ffb472 0%,#ff7800 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb472', endColorstr='#ff7800',GradientType=0 );
+
+
+}
+
+.token{
+    padding: 2px;
+    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: bold;
+    line-height: normal;
+    width: 100px;
+	height: 100px;
+    background: #008000;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+
 
 h1 {
 color:#ff7800;
@@ -23,9 +58,14 @@ color:#fff;
     border: 1px solid black;
     color: #fff;
     font-size:1.2em;
+ 
 
 }
 
+.drop-shadow {
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5); 
+
+}
 .weightLabels {
    font-size:2em;
     color:#fff;
@@ -36,9 +76,9 @@ color:#fff;
 }
 
 #nodesearch_canvas {
-background-color:#269;
-background-image: linear-gradient(white 2px, transparent 2px),
-linear-gradient(90deg, white 2px, transparent 2px),
+background-color:rgba(27,118,255,0.7);
+background-image: linear-gradient(rgba(255,255,255,0.6) 2px, transparent 2px),
+linear-gradient(90deg, rgba(255,255,255,0.5) 2px, transparent 2px),
 linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
 background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
@@ -48,4 +88,13 @@ width:100%;
 
 
 
+}
+select {
+
+    height: 27px;
+}
+
+.ui-button.ui-state-default {
+
+    font-size: .7em;
 }
