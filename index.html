@@ -8,25 +8,23 @@
 
 <script type='text/javascript' src='scripts/knockout-2.2.1.js'></script>
 <link href="css/ui-lightness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
-
 <link href="css/style.css" rel="stylesheet">
-	
 <script src="js/jquery-1.9.1.js"></script>
-	
 <script src="js/jquery-ui-1.10.2.custom.js"></script>
-
 <script type='text/javascript' src ="scripts/jquery.jsPlumb-1.3.16-all-min.js"></script>
 <script type='text/javascript' src ="scripts/graphVis.js"></script>
+
 
 <button data-bind="click: addNode">Add A Node</button>
 <button data-bind="click: clearConnections">Clear Connections</button>
 <button data-bind="click: reset">Reset</button>
 <button data-bind="click: unmark">Unmark</button>
-<div data-bind="foreach: { data: graph, afterAdd: bindNodeEvents}">
-    <div class="circle" data-bind="attr: {id: id}, text: id"></div>
-</div>
+<button data-bind="click: kruskal">Kruskal</button>
 
-<div id="nodesearch_canvas"></div>
+<div id="nodesearch_canvas">
+    <div data-bind="foreach: { data: graph, afterAdd: bindNodeEvents}">
+    <div class="circle" data-bind="attr: {id: id}, text: id"></div>
+</div></div>
 <div id="dialog"></div>
 </body>
 </html>
