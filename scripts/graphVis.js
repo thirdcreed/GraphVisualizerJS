@@ -42,6 +42,7 @@ function GraphViewModel() {
             if (e.which == 3) {
                 self.from = $(this);
             }
+          
         };
         var mouseupHandle = function(e, ui) {
             if (e.which == 3) {
@@ -238,8 +239,8 @@ function GraphViewModel() {
                 p[rootA] = rootB;
                 console.log("Coloring: ", setA, setB);
                 
-                jsPlumb.select({ source: "" + setA, target: "" + setB }).setPaintStyle({ strokeStyle: "black", lineWidth: 15});
-               jsPlumb.select({ source: "" + setB, target: "" + setA }).setPaintStyle({ strokeStyle: "black", lineWidth: 15});
+                jsPlumb.select({ source: "" + setA, target: "" + setB }).setPaintStyle({ strokeStyle: "white", lineWidth: 10});
+               jsPlumb.select({ source: "" + setB, target: "" + setA }).setPaintStyle({ strokeStyle: "white", lineWidth: 10});
                // if (p[setA] != null) self.graph()[setB].adj()[p[setA]].gui.getOverlay("label").setLabel("XXXXXX");
             }
         
@@ -306,4 +307,37 @@ function GraphViewModel() {
 
 
 ko.applyBindings(new GraphViewModel());
+
+
+    var tourSubmitFunc = function(e, v, m, f) {
+        if (v === -1) {
+            $.prompt.prevState();
+            return false;
+        } else if (v === 1) {
+            $.prompt.nextState();
+            return false;
+        }
+    };
+
+var tourStates = [
+{
+    title: 'Welcome',
+    html: 'Welcome to NodeGraphinJs',
+    buttons: { Next: 1 },
+    focus: 1,
+    position: { container: 'h1', x: 200, y: 60, width: 200, arrow: 'tc' },
+    submit: tourSubmitFunc
+   
+},
+    
+{
+    title: 'Lets get started!',
+    html: 'Add some nodes, they will stack up on the canvas',
+    buttons: { Prev: -1, Next: 1 },
+    focus: 1,
+    position: { container: '#addNodeButton', x: -30, y: 30, width: 200, arrow: 'tc' },
+    submit: tourSubmitFunc
+    },
+];
+$.prompt(tourStates);
 });

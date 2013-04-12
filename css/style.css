@@ -10,14 +10,14 @@ width:95%;
 #toolbar { 
     padding: 3px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    background: #ffb472;
-background: -moz-linear-gradient(top,  #ffb472 0%, #ff7800 100%);
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffb472), color-stop(100%,#ff7800));
-background: -webkit-linear-gradient(top,  #ffb472 0%,#ff7800 100%);
-background: -o-linear-gradient(top,  #ffb472 0%,#ff7800 100%);
-background: -ms-linear-gradient(top,  #ffb472 0%,#ff7800 100%);
-background: linear-gradient(to bottom,  #ffb472 0%,#ff7800 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb472', endColorstr='#ff7800',GradientType=0 );
+    background: rgb(255,154,66);
+background: -moz-linear-gradient(top,  rgba(255,154,66,1) 0%, rgba(255,120,0,1) 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,154,66,1)), color-stop(100%,rgba(255,120,0,1)));
+background: -webkit-linear-gradient(top,  rgba(255,154,66,1) 0%,rgba(255,120,0,1) 100%);
+background: -o-linear-gradient(top,  rgba(255,154,66,1) 0%,rgba(255,120,0,1) 100%);
+background: -ms-linear-gradient(top,  rgba(255,154,66,1) 0%,rgba(255,120,0,1) 100%);
+background: linear-gradient(to bottom,  rgba(255,154,66,1) 0%,rgba(255,120,0,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9a42', endColorstr='#ff7800',GradientType=0 );
 
 
 }
@@ -28,12 +28,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb472', end
     font-family: sans-serif;
     font-weight: bold;
     line-height: normal;
-    width: 100px;
-	height: 100px;
-    background: #008000;
-	-moz-border-radius: 50px;
-	-webkit-border-radius: 50px;
-	border-radius: 50px;
+    background: #333;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+    
 }
 
 
@@ -64,6 +63,12 @@ color:#fff;
 
 .drop-shadow {
       box-shadow: 0 2px 5px rgba(0,0,0,0.5); 
+
+}
+.circle:target {
+    -webkit-box-shadow:  8px 8px 14px 8px rgba(0, 0, 0, 0.4);
+        
+        box-shadow:  8px 8px 14px 8px rgba(0, 0, 0, 0.4);
 
 }
 .weightLabels {

@@ -9,8 +9,11 @@
     <script src="js/jquery-ui-1.10.2.custom.js"></script>
     <script type='text/javascript' src="scripts/jquery.jsPlumb-1.3.16-all-min.js"></script>
     <script type='text/javascript' src="scripts/graphVis.js"></script>
-    <script> $(document).ready(function () {
+    <link href='jquery-impromptu.css' rel="stylesheet">
+    <script type='text/javascript' src='jquery-impromptu.js'></script>
 
+     <script> $(document).ready(function () {
+   
     $('#addNodeButton').button({
         
         icons: {
@@ -60,15 +63,16 @@
     <p>Right click and drag to add a connection</p>
     <div id="toolbar" class="ui-widget-header ui-corner-top">
 
-        <span id="dfs" class="token ui-state-default">DFS</span>
-        <span id="bfs" class="token ui-state-default">BFS</span>
-
+    
 
         <button id="addNodeButton" data-bind="click: addNode" class="  ui-state-default ui-corner-all">Add A Node</button>
         <button id="clearButton" data-bind="click: clearConnections" class=" ui-state-default ui-corner-all">Clear Connections</button>
         <button id="resetButton" data-bind="click: reset" class=" ui-state-default ui-corner-all">Reset</button>
         <button id="unmarkButton" data-bind="click: unmark" class="ui-state-default ui-corner-all">Unmark</button>
         <button id="kruskalButton" data-bind="click: kruskal" class=" ui-state-default ui-corner-all">Kruskal</button>
+        
+        <span id="dfs" class="token ui-icon-search">DFS</span>
+        <span id="bfs" class="token ui-icon-search">BFS</span>
 
         <select data-bind="options:$root.graphTypes, optionsText:'graphType', value:'graphType'" id="graphTypeId"></select>
     </div>
