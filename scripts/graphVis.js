@@ -4,9 +4,9 @@ $(document).bind("contextmenu", function(e) {
     e.stopPropagation();
 });
 
-var sound = new Howl({
-    urls: ['SmoothestJazz.mp3']
-})
+    var sound = new Howl({
+        urls: ['SmoothestJazz.mp3']
+    });
     
     // First Time Visit Processing
     // copyright 10th January 2006, Stephen Chapman
@@ -24,6 +24,9 @@ var tourSubmitFunc = function (e, v, m, f) {
     } else if (v === 1) {
         $.prompt.nextState();
         return false;
+    } else {
+        GraphViewModel.tourStages = [0, 0, 0, 0, 0];
+
     }
 };
 
@@ -33,7 +36,7 @@ var tourSubmitFunc = function (e, v, m, f) {
        {
            title: 'Welcome',
            html: 'Welcome to NodeGraphinJs',
-           buttons: { Next: 1 },
+           buttons: {Cancel: 0, Next: 1, },
            focus: 1,
            position: { container: 'h1', x: 200, y: 60, width: 200, arrow: 'tc' },
            submit: tourSubmitFunc
