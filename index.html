@@ -9,6 +9,7 @@
     <script src="js/jquery-ui-1.10.2.custom.js"></script>
     <script type='text/javascript' src="scripts/jquery.jsPlumb-1.3.16-all-min.js"></script>
     <script type='text/javascript' src="scripts/graphVis.js"></script>
+    <script type='text/javascript' src="scripts/first-time.js"></script>
     <link href='jquery-impromptu.css' rel="stylesheet">
     <script type='text/javascript' src='jquery-impromptu.js'></script>
 
@@ -60,7 +61,7 @@
 
     <h1>Node Graphin'</h1>
 
-    <p>Right click and drag to add a connection</p>
+    <p>A simple visualization tool</p>
     <div id="toolbar" class="ui-widget-header ui-corner-top">
 
     
@@ -70,6 +71,7 @@
         <button id="resetButton" data-bind="click: reset" class=" ui-state-default ui-corner-all">Reset</button>
         <button id="unmarkButton" data-bind="click: unmark" class="ui-state-default ui-corner-all">Unmark</button>
         <button id="kruskalButton" data-bind="click: kruskal" class=" ui-state-default ui-corner-all">Kruskal</button>
+
         
         <span id="dfs" class="token ui-icon-search">DFS</span>
         <span id="bfs" class="token ui-icon-search">BFS</span>

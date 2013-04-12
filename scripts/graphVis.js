@@ -3,6 +3,92 @@ $(document).bind("contextmenu", function(e) {
     e.preventDefault();
     e.stopPropagation();
 });
+    
+var tourSubmitFunc = function (e, v, m, f) {
+    if (v === -1) {
+        $.prompt.prevState();
+        return false;
+    } else if (v === 1) {
+        $.prompt.nextState();
+        return false;
+    }
+};
+
+   
+    
+    var tourStates = [
+       {
+           title: 'Welcome',
+           html: 'Welcome to NodeGraphinJs',
+           buttons: { Next: 1 },
+           focus: 1,
+           position: { container: 'h1', x: 200, y: 60, width: 200, arrow: 'tc' },
+           submit: tourSubmitFunc
+       },
+       {
+           title: 'Lets get started!',
+           html: 'Add some nodes, they will stack up on the canvas',
+           buttons: { Ok: 1 },
+           focus: 1,
+           position: { container: '#addNodeButton', x: -30, y: 30, width: 200, arrow: 'tc' },
+       }];
+  
+var afterNodeAdd =  [{
+    title: 'Nice!',
+    html: 'You can create as many as you like, right-click and drag from one node to another to create a connection',
+    buttons: { Ok: 1 },
+    focus: 1,
+    position: { container: '.circle:first', x:75 , y: 15, width: 200,arrow: 'lt' },
+    
+
+}
+    ];
+    
+
+var afterConnection = [{
+    title: 'Good Job!',
+    html: 'Now- add more nodes,and create at least 4 more edges',
+    buttons: { Ok: 1 },
+    focus: 1,
+    position: { container: '#nodesearch_canvas', x: 20, y: 60, width: 200 },
+   
+
+}
+];
+    
+var afterFourConnection = [{
+    title: 'Drag and drop...',
+    html: 'one of these tokens to perform a Depth First or Breadth First search from the node where the token is placed',
+    buttons: { Ok: 1 },
+    focus: 1,
+    position: { container: '#dfs', x: -60, y: 40, width: 200, arrow: 'tc' },
+
+}, 
+    
+];
+    
+var afterSearch = [
+
+    {
+        title: 'Change the edge type',
+        html: 'The edges can either be Directed,Undirected,or Weighted,',
+        buttons: { Ok: 1 },
+        focus: 1,
+        position: { container: '#graphTypeId', x:-60, y: 40, width: 200, arrow: 'tc' },
+        submit: tourSubmitFunc
+
+    }, {
+        title: 'Clear the graph...',
+        html: 'by clicking reset, then try making a weighted graph. Use kruskal\'s to see the minimum spanning tree',
+        buttons: { Ok: 1 },
+        focus: 1,
+        position: { container: '#toolbar', x: 165, y: 40, width: 200, arrow: 'tc' },
+        
+
+    }
+]
+    
+
 
 
 
@@ -23,7 +109,14 @@ function GraphViewModel() {
     self.graph = ko.observableArray();
     self.$canvas = $('#nodesearch_canvas');
     //self.connectionsMatrix = [];
-   // jsPlumb.Defaults.Container = 'nodesearch_canvas';
+    // jsPlumb.Defaults.Container = 'nodesearch_canvas';
+    self.tourStages = [0, 0, 0, 0, 0, 0];
+    if (window.tour) {
+        self.tourStages = [1, 1, 1, 1, 1];
+        
+    } 
+   
+   if (self.tourStages[0] > 0) $.prompt(tourStates);
     
 
     
@@ -79,6 +172,10 @@ function GraphViewModel() {
     };
     self.addNode = function() {
         self.graph.push(new Node(self.nodeNum++, []));
+        if (self.tourStages[0] > 0, self.tourStages[1] > 0) {
+            $.prompt(afterNodeAdd);
+            self.tourStages[1] = 0;
+        }
     };
     self.baseConnectionObject = function(src, trgt) {
         return {
@@ -158,6 +255,17 @@ function GraphViewModel() {
             console.log(self.graph()[e1.attr("id")].adj())
  
         }
+        
+        if (self.tourStages[0] > 0, self.tourStages[2] > 0) {
+            $.prompt(afterConnection);
+            self.tourStages[2] = 0;
+        }
+        else if (self.tourStages[3] == 4) {
+            $.prompt(afterFourConnection);
+            self.tourStages[3]++;
+        } else {
+            self.tourStages[3]++;
+        }
     };
 
     //ALGORITHMS
@@ -181,6 +289,11 @@ function GraphViewModel() {
                 }
             }
         }
+        
+        if (self.tourStages[0] > 0 && self.tourStages[4] > 0) {
+            $.prompt(afterSearch);
+            self.tourStages[4] = 0;
+        }
     };
 
     self.bfs = function(start, options) {
@@ -203,6 +316,10 @@ function GraphViewModel() {
                     console.log("QUEUE: ", queue);
                 }
             }
+        }
+        if (self.tourStages[0] > 0 && self.tourStages[4] > 0) {
+            $.prompt(afterSearch);
+            self.tourStages[4] = 0;
         }
     };
 
@@ -309,35 +426,6 @@ function GraphViewModel() {
 ko.applyBindings(new GraphViewModel());
 
 
-    var tourSubmitFunc = function(e, v, m, f) {
-        if (v === -1) {
-            $.prompt.prevState();
-            return false;
-        } else if (v === 1) {
-            $.prompt.nextState();
-            return false;
-        }
-    };
+  
 
-var tourStates = [
-{
-    title: 'Welcome',
-    html: 'Welcome to NodeGraphinJs',
-    buttons: { Next: 1 },
-    focus: 1,
-    position: { container: 'h1', x: 200, y: 60, width: 200, arrow: 'tc' },
-    submit: tourSubmitFunc
-   
-},
-    
-{
-    title: 'Lets get started!',
-    html: 'Add some nodes, they will stack up on the canvas',
-    buttons: { Prev: -1, Next: 1 },
-    focus: 1,
-    position: { container: '#addNodeButton', x: -30, y: 30, width: 200, arrow: 'tc' },
-    submit: tourSubmitFunc
-    },
-];
-$.prompt(tourStates);
 });
