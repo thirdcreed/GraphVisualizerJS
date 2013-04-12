@@ -1,8 +1,21 @@
-$( document ).ready(function(){ 
+$(document).ready(function () {
 $(document).bind("contextmenu", function(e) {
     e.preventDefault();
     e.stopPropagation();
 });
+
+var sound = new Howl({
+    urls: ['SmoothestJazz.mp3']
+})
+    
+    // First Time Visit Processing
+    // copyright 10th January 2006, Stephen Chapman
+    // permission to use this Javascript on your web page is granted
+    // provided that all of the below code in this script (including this
+    // comment) is used without any alteration
+function rC(nam) { var tC = document.cookie.split('; '); for (var i = tC.length - 1; i >= 0; i--) { var x = tC[i].split('='); if (nam == x[0]) return unescape(x[1]); } return '~'; } function wC(nam, val) { document.cookie = nam + '=' + escape(val); } function lC(nam, pg) { var val = rC(nam); if (val.indexOf('~' + pg + '~') != -1) return false; val += pg + '~'; wC(nam, val); return true; } function firstTime(cN) { return lC('pWrD4jBo', cN); } function thisPage() { var page = location.href.substring(location.href.lastIndexOf('\/') + 1); pos = page.indexOf('.'); if (pos > -1) { page = page.substr(0, pos); } return page; }
+
+ 
     
 var tourSubmitFunc = function (e, v, m, f) {
     if (v === -1) {
@@ -110,8 +123,11 @@ function GraphViewModel() {
     self.$canvas = $('#nodesearch_canvas');
     //self.connectionsMatrix = [];
     // jsPlumb.Defaults.Container = 'nodesearch_canvas';
+    console.log(window.tour);
     self.tourStages = [0, 0, 0, 0, 0, 0];
-    if (window.tour) {
+
+    
+    if (firstTime(thisPage())) {
         self.tourStages = [1, 1, 1, 1, 1];
         
     } 
@@ -270,19 +286,19 @@ function GraphViewModel() {
 
     //ALGORITHMS
     self.dfs = function(start, options) {
-        numMarked = 0;
+        var numMarked = 0;
         stack = [];
-        rootNode = start;
+        var rootNode = start;
         stack.push(rootNode);
         while (stack && stack.length > 0) {
-            currentNode = stack.pop();
+            var currentNode = stack.pop();
             if (!self.marked[currentNode]) {
                 self.marked[currentNode] = true;
                 numMarked++;
                 $('#' + currentNode).delay(numMarked * 500).animate({
                     opacity: 0.25
                 }, 1000);
-                adjList = self.graph()[currentNode].adj();
+               var  adjList = self.graph()[currentNode].adj();
                 for (i = 0; i < adjList.length; i++) {
                     stack.push(adjList[i].id);
                     console.log("STACK: ", stack);
@@ -297,23 +313,22 @@ function GraphViewModel() {
     };
 
     self.bfs = function(start, options) {
-        numMarked = 0;
-        queue = [];
-        rootNode = start;
+        var numMarked = 0;
+        var queue = [];
+        var rootNode = start;
         queue.unshift(rootNode);
         while (queue && queue.length > 0) {
-            currentNode = queue.pop();
+          var currentNode = queue.pop();
             if (!self.marked[currentNode]) {
                 self.marked[currentNode] = true;
                 numMarked++;
                 $('#' + currentNode).delay(numMarked * 500).animate({
                     opacity: 0.50
                 }, 1000);
-                adjList = self.graph()[currentNode].adj();
+               var adjList = self.graph()[currentNode].adj();
                 console.log(adjList);
-                for (i = 0; i < adjList.length; i++) {
+                for (var i = 0; i < adjList.length; i++) {
                     queue.unshift(adjList[i].id);
-                    console.log("QUEUE: ", queue);
                 }
             }
         }
@@ -324,33 +339,27 @@ function GraphViewModel() {
     };
 
     self.kruskal = function () {
-        E = [];
-        p = [] //parentArray
+       var E = [];
+       var p = [] //parentArray
 
         for (var i = 0;i < self.graph().length; i++) {
                   p[i] = null;
         }
 
         var find = function (  element ){
-            while ( p[element] != null) { 
-                console.log("element = p[element]:", element, " = ", p[element]);
-                element = p[element];
-               
-                
+            while ( p[element] != null) {
+                element = p[element];   
             }
             return element
         }
 
         var union = function (setA, setB) {
-           var setB = parseInt(setB)
-            console.log("Union of ", setA, " and ", setB);
+            var setB = parseInt(setB);
             var rootA = find(setA);
-            console.log("rootA: ", rootA );
 
             var rootB = find(setB);
-            console.log("rootB: ", rootB);
-            if ( rootA == rootB ){
-                return
+            if ( rootA == rootB ) {
+                return;
             }
             else {
                 p[rootA] = rootB;
@@ -377,27 +386,15 @@ function GraphViewModel() {
         });
         E.reverse();
 
-        var num = 0;
+        
         while (E.length > 0) {
             var currentEdge = E.pop();
-            console.log(currentEdge);
-            union(currentEdge.from,currentEdge.to);
-            console.log("P during", num++,"th Iteration of while: ",p);
-           
+            union(currentEdge.from,currentEdge.to); 
         }
-        console.log("P after while:", p);
-        for (var i = 0; i < p.length; i++) {
-            var blue = {
-                paintStyle: {
-                    lineWidth: 30,
-                    strokeStyle: "#056"
-                }
-            };
-            
-          
-
+        
+      
        
-        }
+        
  
     }
 
@@ -418,6 +415,10 @@ function GraphViewModel() {
     self.unmark = function() {
         self.marked = [];
         $('.circle').css("opacity", "1");
+    };
+
+    self.smoothJazz = function() {
+        sound.play();
     };
 }
 
