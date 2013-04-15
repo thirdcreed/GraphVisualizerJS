@@ -7,7 +7,50 @@ $(document).bind("contextmenu", function(e) {
     var sound = new Howl({
         urls: ['SmoothestJazz.mp3']
     });
+
+    var polarToRect = function(theta, radius) {
+        theta = toRadians(theta);
+        var x = radius * Math.cos(theta);
+        var y = radius * Math.sin(theta);
+        var point = { x: x, y: y };
+        return point;
+
+    };
     
+    function toRadians(angle) {
+        return angle * (Math.PI / 180);
+    }
+   
+
+
+    var findRadius = function(numberOfNodes) {
+        var n = numberOfNodes ;
+        console.log("numberOfNodes in findRadius:", n);
+        var r =   n * 60/(2 * Math.PI ) + 10 ;
+
+  
+        return r;
+
+    };
+
+    var findOrigin = function() {
+       
+        
+        var $this = $('#nodesearch_canvas');
+        var offset = $this.offset();
+        var width = $this.width();
+        var height = $this.height();
+
+        var centerX = offset.left + width / 2;
+        var centerY = offset.top + height / 2;
+        return {x:centerX,y:centerY};
+    };
+
+   
+    
+
+   
+
     // First Time Visit Processing
     // copyright 10th January 2006, Stephen Chapman
     // permission to use this Javascript on your web page is granted
@@ -124,9 +167,8 @@ function GraphViewModel() {
     self.marked = [];
     self.graph = ko.observableArray();
     self.$canvas = $('#nodesearch_canvas');
-    //self.connectionsMatrix = [];
+ 
     // jsPlumb.Defaults.Container = 'nodesearch_canvas';
-    console.log(window.tour);
     self.tourStages = [0, 0, 0, 0, 0, 0];
 
     
@@ -135,7 +177,46 @@ function GraphViewModel() {
         
     } 
    
-   if (self.tourStages[0] > 0) $.prompt(tourStates);
+    if (self.tourStages[0] > 0) $.prompt(tourStates);
+    
+    self.arrangeNodes = function () {
+        var $circles = $('.circle');
+        var numNodes = $circles.length;
+        var r = findRadius(numNodes);
+       // var origin = findOrigin();
+        console.log("Radius",r);
+      // console.log(origin);
+        var thetaUnits = 360 / numNodes;
+        console.log("thetaUnits:" ,thetaUnits);
+        var currentAngle = 0;
+        $circles.each(function () {
+            //var $this = $(this);
+
+
+
+          
+          //  var o = origin.offset();
+          //  $this.offset({ top: 0 - origin.x, left: origin.y});
+            var position = polarToRect(currentAngle * thetaUnits, r);
+            
+            var options = {
+                "my": "center,center",
+                "at": "center,center",
+                "of": "#nodesearch_canvas",
+            };
+            
+            $(this).position(options);
+            $offset = $(this).offset();
+            console.log("position:",position);
+            $(this).offset({ top: $offset.top + position.y, left: $offset.left + position.x });
+            jsPlumb.repaintEverything();
+            
+           // console.log($(this),currentAngle * thetaUnits);
+            currentAngle++;
+        });
+
+        currentAngle = 0;
+    };
     
 
     
@@ -177,10 +258,10 @@ function GraphViewModel() {
             hoverClass: 'ui-state-hover',
             drop: dropFunction
         };
-        
+
         var drag = {
             stack: ".circle"
-        }
+        };
         //bind
         jsPlumb.draggable($n);
         $n
@@ -342,64 +423,72 @@ function GraphViewModel() {
     };
 
     self.kruskal = function () {
-       var E = [];
-       var p = [] //parentArray
+        
+        
+       
 
-        for (var i = 0;i < self.graph().length; i++) {
-                  p[i] = null;
+
+        var E = [];
+        var p = [] //parentArray
+
+        for (var i = 0; i < self.graph().length; i++) {
+            p[i] = null;
         }
 
-        var find = function (  element ){
-            while ( p[element] != null) {
-                element = p[element];   
+        var find = function(element) {
+            while (p[element] != null) {
+                element = p[element];
             }
             return element
         }
 
         var union = function (setA, setB) {
+           
+
             var setB = parseInt(setB);
+
+          
+
             var rootA = find(setA);
 
             var rootB = find(setB);
-            if ( rootA == rootB ) {
+            if (rootA == rootB) {
+               //jsPlumb.select({ source: "" + setA, target: "" + setB });
                 return;
-            }
-            else {
+            } else {
                 p[rootA] = rootB;
                 console.log("Coloring: ", setA, setB);
-                
-                jsPlumb.select({ source: "" + setA, target: "" + setB }).setPaintStyle({ strokeStyle: "white", lineWidth: 10});
-               jsPlumb.select({ source: "" + setB, target: "" + setA }).setPaintStyle({ strokeStyle: "white", lineWidth: 10});
-               // if (p[setA] != null) self.graph()[setB].adj()[p[setA]].gui.getOverlay("label").setLabel("XXXXXX");
-            }
-        
 
-        }// end func
+                jsPlumb.select({ source: "" + setA, target: "" + setB }).setPaintStyle({ strokeStyle: "white", lineWidth: 10 });
+                jsPlumb.select({ source: "" + setB, target: "" + setA }).setPaintStyle({ strokeStyle: "white", lineWidth: 10 });
+
+                // if (p[setA] != null) self.graph()[setB].adj()[p[setA]].gui.getOverlay("label").setLabel("XXXXXX");
+            }
+
+
+        } // end func
 
         for (var i = 0; i < self.graph().length; i++) {
-            for(j = 0; j < self.graph()[i].adj().length; j++){
-                
-                E.push({from:i,to:self.graph()[i].adj()[j].id,w:self.graph()[i].adj()[j].weight});
+            for (j = 0; j < self.graph()[i].adj().length; j++) {
+
+                E.push({ from: i, to: self.graph()[i].adj()[j].id, w: self.graph()[i].adj()[j].weight });
             }
-            
+
         }
         // sort E;
-        E.sort(function (a, b) {
+        E.sort(function(a, b) {
             return a.w - b.w
         });
         E.reverse();
 
-        
+
         while (E.length > 0) {
             var currentEdge = E.pop();
-            union(currentEdge.from,currentEdge.to); 
+            union(currentEdge.from, currentEdge.to);
         }
-        
-      
-       
-        
- 
-    }
+        jsPlumb.select("markToDelete").detach();
+
+    };
 
     //TEAR DOWN
     self.clearConnections = function() {
@@ -421,6 +510,7 @@ function GraphViewModel() {
     };
 
     self.smoothJazz = function() {
+
         sound.play();
     };
 }

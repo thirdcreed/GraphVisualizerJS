@@ -61,6 +61,14 @@
         }
 
     });
+    
+    $('#Arrange').button({
+
+        icons: {
+            primary: "ui-icon-bullet"
+        }
+
+    });
 
 
 });</script>
@@ -83,7 +91,7 @@
         <button id="unmarkButton" data-bind="click: unmark" class="ui-state-default ui-corner-all">Unmark</button>
         <button id="kruskalButton" data-bind="click: kruskal" class=" ui-state-default ui-corner-all">Kruskal</button>
          <button id="smoothJazz" data-bind="click: smoothJazz" class=" ui-state-default ui-corner-all">Smoothest Jazz Ever</button>
-
+        <button id="Arrange" data-bind="click: arrangeNodes" class=" ui-state-default ui-corner-all">Arrange</button>
         
         <span id="dfs" class="token ui-icon-search">DFS</span>
         <span id="bfs" class="token ui-icon-search">BFS</span>
