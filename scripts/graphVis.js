@@ -26,7 +26,7 @@ $(document).bind("contextmenu", function(e) {
     var findRadius = function(numberOfNodes) {
         var n = numberOfNodes ;
         console.log("numberOfNodes in findRadius:", n);
-        var r =   n * 60/(2 * Math.PI ) + 10 ;
+         r = n < 12 ? 120 :  n * 60 /(2 * Math.PI ) + 10;
 
   
         return r;
@@ -190,7 +190,7 @@ function GraphViewModel() {
         console.log("thetaUnits:" ,thetaUnits);
         var currentAngle = 0;
         $circles.each(function () {
-            //var $this = $(this);
+            var $this = $(this);
 
 
 
@@ -205,10 +205,10 @@ function GraphViewModel() {
                 "of": "#nodesearch_canvas",
             };
             
-            $(this).position(options);
-            $offset = $(this).offset();
+            $this.position(options);
+            $offset = $this.offset();
             console.log("position:",position);
-            $(this).offset({ top: $offset.top + position.y, left: $offset.left + position.x });
+            $this.offset({ top: $offset.top + position.y, left: $offset.left + position.x });
             jsPlumb.repaintEverything();
             
            // console.log($(this),currentAngle * thetaUnits);
@@ -424,12 +424,8 @@ function GraphViewModel() {
 
     self.kruskal = function () {
         
-        
-       
-
-
         var E = [];
-        var p = [] //parentArray
+        var p = [];//parentArray
 
         for (var i = 0; i < self.graph().length; i++) {
             p[i] = null;
